@@ -7,6 +7,7 @@ Write, upload, download. No account needed
 ## Features
 
 - Split-pane editor with live rendered preview (GFM)
+- Syntax highlighting for code blocks (highlight.js, auto-detects language)
 - Drag and drop any `.md` file to open it
 - Upload via button or `Ctrl+O`
 - Download via button or `Ctrl+S`
