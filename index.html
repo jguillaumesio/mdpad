@@ -109,6 +109,137 @@
 
   #file-input { display: none; }
 
+  /* ── Settings button ── */
+  .settings-btn {
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+    padding: 6px 10px;
+    border-radius: 6px;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.15s;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    white-space: nowrap;
+  }
+  .settings-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .settings-btn:active { transform: scale(0.97); }
+  .settings-btn svg { width: 15px; height: 15px; }
+
+  /* ── Settings Modal ── */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.6);
+    z-index: 200;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+  }
+  .modal-overlay.show { display: flex; }
+  .modal {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    width: 100%;
+    max-width: 580px;
+    max-height: 85vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+  .modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 18px;
+    border-bottom: 1px solid var(--border);
+  }
+  .modal-header h2 {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text);
+  }
+  .modal-close {
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    font-size: 22px;
+    cursor: pointer;
+    line-height: 1;
+    padding: 0 4px;
+  }
+  .modal-close:hover { color: var(--accent); }
+  .modal-body {
+    padding: 18px;
+    overflow-y: auto;
+  }
+  .modal-body label {
+    display: block;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+  }
+  .modal-body textarea {
+    width: 100%;
+    min-height: 200px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    color: var(--text);
+    font-family: var(--font-mono);
+    font-size: 13px;
+    line-height: 1.5;
+    padding: 12px;
+    resize: vertical;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .modal-body textarea:focus { border-color: var(--accent); }
+  .modal-footer {
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+    margin-top: 12px;
+  }
+  .modal-footer button {
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 6px 14px;
+    border-radius: 6px;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .modal-footer button:hover { border-color: var(--accent); color: var(--accent); }
+  .modal-footer button.primary {
+    background: var(--accent);
+    color: var(--bg);
+    border-color: var(--accent);
+    font-weight: 600;
+  }
+  .modal-footer button.primary:hover { opacity: 0.9; color: var(--bg); }
+  .css-hint {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-top: 6px;
+    line-height: 1.6;
+  }
+  .css-hint code {
+    background: var(--surface-2);
+    padding: 1px 5px;
+    border-radius: 3px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+  }
+
   /* ── Main area ── */
   .main {
     display: flex;
@@ -390,9 +521,36 @@
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
       <span class="label">Download</span>
     </button>
+    <button class="settings-btn" id="btn-settings" title="Custom CSS">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+      <span class="label">Style</span>
+    </button>
     <input type="file" id="file-input" accept=".md,.markdown,.txt,.text">
   </div>
 </header>
+
+<!-- ── Settings Modal ── -->
+<div class="modal-overlay" id="settings-modal">
+  <div class="modal">
+    <div class="modal-header">
+      <h2>Custom CSS</h2>
+      <button class="modal-close" id="modal-close" aria-label="Close">&times;</button>
+    </div>
+    <div class="modal-body">
+      <label for="css-input">Preview Stylesheet</label>
+      <textarea id="css-input" spellcheck="false" placeholder="Write CSS to style the preview pane..."></textarea>
+      <div class="css-hint">
+        Target the <code>#preview</code> element. Example:<br>
+        <code>#preview { background: #fafafa; color: #222; }</code><br>
+        <code>#preview h1 { color: #0066cc; }</code>
+      </div>
+      <div class="modal-footer">
+        <button id="css-reset">Reset to Default</button>
+        <button id="css-save" class="primary">Save &amp; Apply</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 <div class="main show-editor" id="main">
   <div class="editor-pane">
@@ -513,6 +671,7 @@
       render();
     }
     if (savedName) filenameInput.value = savedName;
+    loadCustomCSS();
   }
 
   // ── Toast ──
@@ -651,6 +810,68 @@
       e.preventDefault();
       fileInput.click();
     }
+  });
+
+  // ── Custom CSS ──
+  const STORAGE_KEY = 'mdpad-custom-css';
+  const cssInput = document.getElementById('css-input');
+  const settingsModal = document.getElementById('settings-modal');
+  const btnSettings = document.getElementById('btn-settings');
+  const modalClose = document.getElementById('modal-close');
+  const cssSave = document.getElementById('css-save');
+  const cssReset = document.getElementById('css-reset');
+
+  // Create a style element for custom CSS
+  const customStyleEl = document.createElement('style');
+  customStyleEl.id = 'mdpad-custom-style';
+  document.head.appendChild(customStyleEl);
+
+  function applyCustomCSS(css) {
+    customStyleEl.textContent = css || '';
+  }
+
+  function loadCustomCSS() {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (saved) {
+      cssInput.value = saved;
+      applyCustomCSS(saved);
+    }
+  }
+
+  btnSettings.addEventListener('click', () => {
+    cssInput.value = localStorage.getItem(STORAGE_KEY) || '';
+    settingsModal.classList.add('show');
+    cssInput.focus();
+  });
+
+  modalClose.addEventListener('click', () => {
+    settingsModal.classList.remove('show');
+  });
+
+  settingsModal.addEventListener('click', (e) => {
+    if (e.target === settingsModal) {
+      settingsModal.classList.remove('show');
+    }
+  });
+
+  cssSave.addEventListener('click', () => {
+    const css = cssInput.value;
+    localStorage.setItem(STORAGE_KEY, css);
+    applyCustomCSS(css);
+    settingsModal.classList.remove('show');
+    toast('Custom CSS saved');
+  });
+
+  cssReset.addEventListener('click', () => {
+    cssInput.value = '';
+    localStorage.removeItem(STORAGE_KEY);
+    applyCustomCSS('');
+    toast('CSS reset to default');
+  });
+
+  // Live preview as user types
+  cssInput.addEventListener('input', () => {
+    applyCustomCSS(cssInput.value);
   });
 
   // ── Init ──
